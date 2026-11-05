@@ -594,5 +594,6 @@ describe('hasFilterQuery', () => {
 	it('returns a boolean for a filter expression', () => {
 		expect(hasFilterQuery('done = false')).toBe(true)
 		expect(hasFilterQuery('hello')).toBe(false)
+		expect(hasFilterQuery('meeting')).toBe(false)
 	})
 })
