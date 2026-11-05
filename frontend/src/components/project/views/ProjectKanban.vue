@@ -354,6 +354,9 @@ const DRAG_OPTIONS = {
 	dragClass: 'task-dragging',
 	delayOnTouchOnly: true,
 	delay: 1000,
+	// Width in px of the edge zone that auto-scrolls the board while dragging. Sortable's
+	// default of 30px is too narrow to catch a pointer near the board edge on a desktop.
+	scrollSensitivity: 100,
 } as const
 
 const MIN_SCROLL_HEIGHT_PERCENT = 0.25
