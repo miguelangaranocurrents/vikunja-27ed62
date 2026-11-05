@@ -809,6 +809,13 @@ function handleTaskDragStart(e: SortableEvent) {
 		}
 		document.addEventListener('dragover', over, true)
 		console.log('[dbg] dragstart', e.from?.className, e.item?.className, kanbanEl?.scrollWidth, kanbanEl?.clientWidth)
+		const sortableKey = e.from ? Object.keys(e.from).find(k => k.startsWith('Sortable')) : undefined
+		const inst = sortableKey ? (e.from as unknown as Record<string, {options: Record<string, unknown>}>)[sortableKey] : undefined
+		console.log('[dbg] sortable', sortableKey, JSON.stringify({scroll: inst?.options?.scroll, scrollSensitivity: inst?.options?.scrollSensitivity, scrollSpeed: inst?.options?.scrollSpeed, bubbleScroll: inst?.options?.bubbleScroll, forceFallback: inst?.options?.forceFallback}))
+		if (kanbanEl) {
+			const r = kanbanEl.getBoundingClientRect()
+			console.log('[dbg] rect', r.left, r.right, r.width, window.innerWidth)
+		}
 		setTimeout(() => { clearInterval(timer); document.removeEventListener('dragover', over, true) }, 15000)
 	}
 	const taskId = Number(e.item.dataset.taskId)
