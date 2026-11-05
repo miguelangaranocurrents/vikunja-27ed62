@@ -797,6 +797,20 @@ function dragstart(bucket: BucketResponse) {
 }
 
 function handleTaskDragStart(e: SortableEvent) {
+	// DBG-TEMP: remove
+	{
+		const kanbanEl = document.querySelector('.kanban') as HTMLElement | null
+		const timer = window.setInterval(() => console.log('[dbg] kanban', kanbanEl?.scrollLeft, kanbanEl?.scrollWidth, kanbanEl?.clientWidth, kanbanEl ? getComputedStyle(kanbanEl).overflowX : 'none', kanbanEl?.className), 300)
+		let lastLog = 0
+		const over = (ev: DragEvent) => {
+			if (performance.now() - lastLog < 200) return
+			lastLog = performance.now()
+			console.log('[dbg] dragover', ev.clientX, ev.clientY, (ev.target as HTMLElement)?.className)
+		}
+		document.addEventListener('dragover', over, true)
+		console.log('[dbg] dragstart', e.from?.className, e.item?.className, kanbanEl?.scrollWidth, kanbanEl?.clientWidth)
+		setTimeout(() => { clearInterval(timer); document.removeEventListener('dragover', over, true) }, 15000)
+	}
 	const taskId = Number(e.item.dataset.taskId)
 	const bucketIndex = Number(e.from.dataset.bucketIndex)
 	const bucket = buckets.value[bucketIndex]
